@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Stethoscope, PlusCircle, CheckCircle2 } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Stethoscope, PlusCircle, BrainCircuit } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
 import Table from '../../components/common/Table';
 import Modal from '../../components/common/Modal';
 import { medicalRecordService } from '../../services/medicalRecordService';
 import { formatDate } from '../../utils/formatters';
+import { predictDiseases } from '../../utils/diseasePredictionModel';
 
 const Diagnosis = () => {
   const { currentUser } = useAuth();
@@ -25,6 +26,7 @@ const Diagnosis = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const predictions = useMemo(() => predictDiseases(form), [form]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -100,7 +102,7 @@ const Diagnosis = () => {
             >
               <option value="">-- Choose Registered Patient --</option>
               {patients.map(p => (
-                <option key={p.id} value={p.id}>{p.name} ({p.id}) - DOB: {p.dateOfBirth || 'N/A'}</option>
+                <option key={p.id} value={p.id}>{p.name} ({p.patientId || p.id}) - DOB: {p.dateOfBirth || 'N/A'}</option>
               ))}
             </select>
           </div>
@@ -169,6 +171,40 @@ const Diagnosis = () => {
                   onChange={e => setForm({ ...form, spo2: e.target.value })}
                   className="w-full px-2 py-1.5 bg-white dark:bg-slate-800 border rounded-lg"
                 />
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-2xl border border-purple-200 bg-purple-50/70 dark:border-purple-900/60 dark:bg-purple-950/20">
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-xl bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300">
+                <BrainCircuit className="w-4 h-4" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h4 className="font-bold text-purple-900 dark:text-purple-200">AI Disease Prediction Assistant</h4>
+                <p className="text-[11px] text-purple-700/80 dark:text-purple-300/80 mt-1">
+                  Enter symptoms and vitals to get ranked possibilities. Review the result and enter the confirmed diagnosis above.
+                </p>
+                {predictions.length > 0 ? (
+                  <div className="mt-3 space-y-2">
+                    {predictions.map(prediction => (
+                      <div key={prediction.disease} className="flex items-center gap-3 p-2.5 rounded-xl bg-white/80 dark:bg-slate-800/80">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-bold text-slate-800 dark:text-white">{prediction.disease}</p>
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                            Matched: {prediction.matchedIndicators.join(', ')}
+                          </p>
+                        </div>
+                        <span className="text-xs font-extrabold text-purple-700 dark:text-purple-300">{prediction.confidence}%</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="mt-3 text-[11px] text-slate-500 dark:text-slate-400">Add symptoms such as cough, fever, wheezing, nausea, or headache to generate predictions.</p>
+                )}
+                <p className="mt-3 text-[10px] text-purple-800/70 dark:text-purple-300/70">
+                  Decision support only — not a diagnosis. Confirm with clinical examination, tests, and professional judgment.
+                </p>
               </div>
             </div>
           </div>

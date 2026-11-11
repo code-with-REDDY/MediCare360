@@ -12,9 +12,13 @@ export const medicalRecordService = {
     return mockApiCall(() => {
       const records = getItem(STORAGE_KEYS.MEDICAL_RECORDS, []);
       const patients = getItem(STORAGE_KEYS.PATIENTS, []);
-      const patient = patients.find(p => p.id === patientId || p.userId === patientId);
+      const patient = patients.find(p =>
+        String(p.id) === String(patientId) || String(p.userId) === String(patientId)
+      );
 
-      return records.filter(r => r.patientId === patientId || (patient && r.patientId === patient.id));
+      return records.filter(r =>
+        String(r.patientId) === String(patientId) || (patient && String(r.patientId) === String(patient.id))
+      );
     });
   },
 
@@ -23,7 +27,9 @@ export const medicalRecordService = {
       const records = getItem(STORAGE_KEYS.MEDICAL_RECORDS, []);
       const patients = getItem(STORAGE_KEYS.PATIENTS, []);
 
-      const patient = patients.find(p => p.id === recordData.patientId || p.name === recordData.patientName);
+      const patient = patients.find(p =>
+        String(p.id) === String(recordData.patientId) || p.name === recordData.patientName
+      );
       if (!patient) throw new Error('Patient not found in system records.');
 
       const recordId = `MR-${Math.floor(100000 + Math.random() * 900000)}`;

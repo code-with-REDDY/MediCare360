@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Users, FileText, Pill, Clock, Stethoscope, PlusCircle } from 'lucide-react';
+import { Calendar, Users, Clock, Stethoscope, PlusCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
 import StatCard from '../../components/common/StatCard';
 import Badge from '../../components/common/Badge';
 import EmptyState from '../../components/common/EmptyState';
 import { formatDate } from '../../utils/formatters';
+import PredictiveRiskPanel from '../../components/doctor/PredictiveRiskPanel';
 
 const DoctorDashboard = () => {
   const { currentUser } = useAuth();
-  const { appointments, medicalRecords, prescriptions, doctors } = useData();
+  const { appointments, medicalRecords, prescriptions, doctors, patients } = useData();
 
   const myDoctorRecord = doctors.find(d => d.userId === currentUser?.id || d.id === currentUser?.profileId);
   const doctorId = myDoctorRecord?.id || currentUser?.profileId || currentUser?.id;
@@ -49,6 +50,8 @@ const DoctorDashboard = () => {
         <StatCard title="Completed Consults" value={completedConsults.length} icon={Stethoscope} color="blue" subtext="Total finished visits" />
         <StatCard title="Total Appointments" value={myAppointments.length} icon={Users} color="purple" subtext="All time assigned" />
       </div>
+
+      <PredictiveRiskPanel patients={patients} medicalRecords={medicalRecords} appointments={appointments} />
 
       {/* Today's Queue */}
       <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-soft">
