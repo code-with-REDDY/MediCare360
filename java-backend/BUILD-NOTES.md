@@ -22,7 +22,7 @@ Open PowerShell and run:
 ```powershell
 $env:JAVA_HOME = "C:\dev\java21\jdk-21.0.7+6"
 $env:PATH = "$env:JAVA_HOME\bin;C:\dev\maven\apache-maven-3.9.9\bin;$env:PATH"
-cd "c:\Users\SIVA SANKAR\OneDrive\Desktop\medicare-360\java-backend"
+cd java-backend
 mvn compile -q
 ```
 

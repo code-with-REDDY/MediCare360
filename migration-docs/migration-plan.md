@@ -4,7 +4,7 @@
 
 **Constraint:** `spring.jpa.hibernate.ddl-auto=validate`. No CREATE TABLE, no DROP TABLE, no ALTER TABLE, no INSERT/DELETE during startup.
 
-**Java project root:** `c:\Users\SIVA SANKAR\OneDrive\Desktop\medicare-360\java-backend\`
+**Java project root:** `java-backend/`
 
 Reference documents:
 - `migration-docs/db-baseline.md` — exact table/column names and types

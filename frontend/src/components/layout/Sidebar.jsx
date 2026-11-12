@@ -4,7 +4,7 @@ import {
   Activity, LayoutDashboard, User, Calendar, FileText, Pill,
   CreditCard, Bell, Stethoscope, Users, ClipboardList, Building,
   ShieldCheck, BarChart3, Settings, Search, HeartPulse, UserPlus,
-  ChevronLeft, ChevronRight, X
+  ChevronLeft, ChevronRight, X, FlaskConical, Microscope, TestTube
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -55,6 +55,11 @@ const Sidebar = ({ isOpen, collapsed, toggleSidebar, toggleCollapse, sidebarW })
       { path: '/pharmacist/prescriptions', label: 'Dispense Prescriptions', icon: FileText },
       { path: '/pharmacist/issue-records', label: 'Issue Records',         icon: ClipboardList },
       { path: '/pharmacist/low-stock',     label: 'Low Stock Alert',       icon: Activity },
+    ],
+    LAB_TECHNICIAN: [
+      { path: '/lab-tech/dashboard',       label: 'Dashboard',          icon: LayoutDashboard },
+      { path: '/lab-tech/test-records',    label: 'Test Records',       icon: FlaskConical },
+      { path: '/lab-tech/patient-samples', label: 'Patient Samples',    icon: Microscope },
     ],
     ADMIN: [
       { path: '/admin/dashboard',    label: 'Dashboard',           icon: LayoutDashboard },

@@ -1,78 +1,98 @@
-# MediCare-360 — Complete Hospital Management Platform
+# MediCare360
 
-MediCare-360 is an enterprise-grade, full-stack hospital management web application engineered for modern healthcare institutions. It provides role-tailored portals, real-time patient monitoring, doctor scheduling, electronic health records (EHR), pharmacy inventory control, billing workflows, audit logging, and centralized administrative management.
+MediCare360 is a full-stack hospital management platform with role-based clinical,
+administrative, pharmacy, laboratory, billing, and patient workflows. It combines
+a React/Vite frontend with a Java 21/Spring Boot backend and a SQLite persistence
+layer suitable for local development.
 
----
+## Features
 
+- Role-based portals for administrators, doctors, nurses, receptionists,
+  pharmacists, laboratory technicians, and patients.
+- Patient registration, appointments, doctor schedules, medical records,
+  vitals, prescriptions, pharmacy inventory, medicine issue records, billing,
+  notifications, audit logs, and department management.
+- JWT authentication with Spring Security, role enforcement, validation, and
+  centralized API error handling.
+- Responsive React UI with Tailwind CSS, protected routes, theme support, and
+  service modules for backend API integration.
+- Clinical decision-support models in the browser:
+  - `diseasePredictionModel.js` uses weighted symptom, diagnosis, temperature,
+    blood-pressure, and oxygen-saturation indicators to rank likely conditions.
+  - `patientRiskModel.js` calculates an explainable 0–100 patient risk score from
+    demographics, chronic conditions, clinical history, vitals, and attendance.
+  - These are decision-support heuristics, not diagnostic replacements or
+    externally trained medical models; clinicians must review the results.
 
+## Architecture
 
-## 👥 Role-Based Portals
+- **Frontend:** React 19, Vite 6, React Router, Tailwind CSS, Recharts,
+  Axios, and Lucide icons.
+- **Backend:** Java 21, Spring Boot 3.2.5, Spring MVC, Spring Data JPA,
+  Spring Security, JWT, Bean Validation, MapStruct, and Lombok.
+- **Database:** SQLite through Hibernate Community Dialects, with migration
+  documentation under `database/`.
+- **Deployment:** Netlify-compatible frontend configuration and Railway/
+  Procfile deployment configuration for the backend.
 
-MediCare-360 implements strict Role-Based Access Control (RBAC) across 6 dedicated user roles:
+## Project layout
 
-1. **Administrator:** System configuration, staff and doctor accounts, clinical departments, audit logs, and performance reports.
-2. **Doctor:** Patient consultations, diagnosis logging, electronic prescription issuance, and schedule management.
-3. **Nurse:** Inpatient vitals recording, assigned patient monitoring, and nursing task execution.
-4. **Receptionist:** Patient registration, appointment booking, doctor availability tracking, and intake billing.
-5. **Pharmacist:** Medicine inventory, stock tracking, and prescription dispensing.
-6. **Patient:** Appointment self-booking, personal health records, electronic prescriptions, and billing statements.
-
----
-
-
-
-## 🚀 Getting Started
-
-### 1. Backend Setup
-
-```bash
-cd backend
-
-# Create and activate virtual environment
-python -m venv venv
-
-# On Windows:
-venv\Scripts\activate
-# On Linux / macOS:
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Create .env from template
-cp .env.example .env
-
-# Run database migrations and seeds
-python -m app.database.init_db
-
-# Start backend server (Windows)
-venv\Scripts\python.exe -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
-# Or cross-platform with active venv:
-python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```text
+frontend/       React/Vite application
+java-backend/   Spring Boot API and tests
+database/       Database migration and ERD documentation
+data/           Local runtime database files (ignored by Git)
 ```
-Backend API will be accessible at: `http://127.0.0.1:8000`  
-Interactive Swagger docs: `http://127.0.0.1:8000/docs`
 
----
+## Getting started
 
-### 2. Frontend Setup
+### Requirements
 
-```bash
-cd frontend
+- Node.js 18+
+- Java 21 JDK
+- Maven 3.9+ (optional when using the existing backend JAR)
 
-# Install dependencies
+### Run the backend
+
+```powershell
+.\run-backend.ps1
+```
+
+The backend runs at `http://localhost:8080`; health check:
+`http://localhost:8080/health`.
+
+### Run the frontend
+
+```powershell
+.\run-frontend.ps1
+```
+
+The frontend runs at `http://localhost:3000`.
+
+Alternatively:
+
+```powershell
+cd java-backend
+mvn spring-boot:run
+
+cd ..\frontend
 npm install
-
-# Start development server
 npm run dev
 ```
-Frontend will be available at: `http://localhost:5173`
 
----
+## Testing
 
+```powershell
+cd java-backend
+mvn test
 
----
+cd ..
+powershell -ExecutionPolicy Bypass -File .\test-api-suite.ps1
+```
 
-## 📄 License
+The API suite expects the backend to be running. Do not commit local databases,
+JWT secrets, `.env` files, generated build output, or patient data.
+
+## License
 
 This project is licensed under the MIT License.

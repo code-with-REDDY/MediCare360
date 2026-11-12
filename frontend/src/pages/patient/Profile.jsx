@@ -8,7 +8,11 @@ const Profile = () => {
   const { currentUser } = useAuth();
   const { patients, refreshData } = useData();
 
-  const myProfile = patients.find(p => p.userId === currentUser?.id || p.id === currentUser?.profileId) || {
+  const myProfile = patients.find(p =>
+    String(p.userId) === String(currentUser?.id) ||
+    p.patientId === currentUser?.profileId ||
+    String(p.id) === String(currentUser?.profileId)
+  ) || {
     name: currentUser?.name || '',
     email: currentUser?.email || '',
     phone: '',

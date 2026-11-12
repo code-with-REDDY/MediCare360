@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HeartPulse, Plus, Trash2, Edit } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
@@ -24,6 +24,10 @@ const PatientManagement = () => {
   });
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    refreshData();
+  }, []);
 
   const handleCreatePatient = async (e) => {
     e.preventDefault();

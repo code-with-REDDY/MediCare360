@@ -23,6 +23,8 @@ backend/venv/
 *.db
 *.sqlite
 *.sqlite3
+*.db-*
+data/
 
 # IDE / Editor
 .vscode/
@@ -42,9 +44,19 @@ Thumbs.db
 .env.test.local
 .env.production.local
 !.env.example
-!backend/.env.example
+!java-backend/.env.example
 
 # Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Java Build Artifacts
+target/
+*.class
+*.jar
+*.war
+
+# Backup
+.backup_pre_cleanup/
+*.bak

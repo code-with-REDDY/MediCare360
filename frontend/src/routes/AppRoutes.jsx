@@ -59,6 +59,11 @@ import PharmacistPrescriptions from '../pages/pharmacist/Prescriptions';
 import MedicineIssueRecords from '../pages/pharmacist/MedicineIssueRecords';
 import LowStockMedicines from '../pages/pharmacist/LowStockMedicines';
 
+// Lab Technician Pages
+import LabTechDashboard from '../pages/lab-tech/LabTechDashboard';
+import TestRecords from '../pages/lab-tech/TestRecords';
+import LabTechPatientSamples from '../pages/lab-tech/PatientSamples';
+
 // Admin Pages
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import UserManagement from '../pages/admin/UserManagement';
@@ -139,6 +144,13 @@ const AppRoutes = () => {
         <Route path="/pharmacist/prescriptions" element={<PharmacistPrescriptions />} />
         <Route path="/pharmacist/issue-records" element={<MedicineIssueRecords />} />
         <Route path="/pharmacist/low-stock" element={<LowStockMedicines />} />
+      </Route>
+
+      {/* Lab Technician Portal Routes */}
+      <Route element={<ProtectedRoute allowedRoles={['LAB_TECHNICIAN']}><MainLayout /></ProtectedRoute>}>
+        <Route path="/lab-tech/dashboard"       element={<LabTechDashboard />} />
+        <Route path="/lab-tech/test-records"    element={<TestRecords />} />
+        <Route path="/lab-tech/patient-samples" element={<LabTechPatientSamples />} />
       </Route>
 
       {/* Administrator Portal Routes */}

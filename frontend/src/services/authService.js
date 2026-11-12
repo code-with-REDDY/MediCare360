@@ -205,7 +205,8 @@ export const authService = {
         return { success: true, data: newPatient };
       }
 
-      const detail = err?.response?.data?.detail || err.message || 'Registration failed';
+      const errData = err?.response?.data;
+      const detail = (errData?.errors?.join(', ')) || errData?.detail || err.message || 'Registration failed';
       throw new Error(detail);
     }
   },

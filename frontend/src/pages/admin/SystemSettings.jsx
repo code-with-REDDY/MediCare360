@@ -10,9 +10,9 @@ const SystemSettings = () => {
     hospitalName: systemSettings.hospitalName || 'Kalasalingam Hospital',
     tagline: systemSettings.tagline || 'Excellence in Compassionate Healthcare',
     address: systemSettings.address || 'Kalasalingam Hospital',
-    phone: systemSettings.phone || '9182281940',
-    emergencyContact: systemSettings.emergencyContact || '9182281940',
-    email: systemSettings.email || 'hussainalipatan@gmail.com',
+    phone: systemSettings.phone || '9182409893',
+    emergencyContact: systemSettings.emergencyContact || '9182409893',
+    email: systemSettings.email || 'anjireddylell6@gmail.com',
     operatingHours: systemSettings.operatingHours || '24/7 Emergency | Outpatient: 8:00 AM - 8:00 PM',
     taxRate: systemSettings.taxRate || 5,
   });
